@@ -16,7 +16,7 @@ int main() {
 
     std::vector<double> t = {20.0, 40.0, 60.0};     // simulation times, s
 
-    for (int j = 0; j < t.size(); j++) {            // output all timess in one loop
+    for (int j = 0; j < t.size(); j++) {            // output all times in one loop
         std::vector<double> rho(N_x, 0.0);              // cell densities
         std::vector<double> a(N_x, 0.0);                // cell characteristic speeds
         std::vector<double> flux(N_x, 0.0);             // cell fluxes

@@ -13,9 +13,26 @@ for col, t in enumerate(times):
     csv_name = f"rhovx_exact_{t}.csv"
     data = np.loadtxt(csv_name, delimiter=",")
 
+    x = data[:,0]
+    rho = data[:,1]
+
+    if rho[21] == 0:
+        rho_light = rho[20]
+    else:
+        rho_light = (rho[21] + rho[20]) / 2
+    v_light = v_max * (1 - rho_light / rho_max)
+
+    idx_first = int(np.max(np.where(rho > 0.01)))
+    rho_first = rho[idx_first]
+    v_first = v_max * (1 - rho_first / rho_max)
+
+    idx_last = int(np.min(np.where(rho > 0.01)))
+    rho_last = rho[idx_last]
+    v_last = v_max * (1 - rho_last / rho_max)
+
     ax = axes[col]
 
-    ax.plot(data[:,0], data[:,1])
+    ax.plot(x, rho)
     ax.axvline(0, color="green", linestyle="--")
     ax.set_ylim(0, 0.11)
 
@@ -23,11 +40,19 @@ for col, t in enumerate(times):
     if col == 0:
         ax.set_ylabel("Density [Cars/ft]")
 
-    ax.set_title(f"Exact Density at t = {t} s")
+    ax.set_title(f"Exact Density at t = {t} s", fontweight="bold")
+
+    ax.text(0.98, 0.95, f"v @ light = {v_light:.2f} ft/s",
+            transform=ax.transAxes, ha="right", va="top", fontsize=12, fontweight="bold")
+    ax.text(0.98, 0.88, f"v @ 1st car = {v_first:.2f} ft/s",
+            transform=ax.transAxes, ha="right", va="top", fontsize=12, fontweight="bold")
+    ax.text(0.98, 0.81, f"v @ 100th car = {v_last:.2f} ft/s",
+            transform=ax.transAxes, ha="right", va="top", fontsize=12, fontweight="bold")
 
 fig.tight_layout()
 plt.savefig("exact_collage.png")
 plt.close()
+
 
 fig, axes = plt.subplots(3, 3, figsize=(16, 14))
 

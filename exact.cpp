@@ -21,7 +21,7 @@ int main() {
         std::vector<double> a(N_x, 0.0);                // cell characteristic speeds
         std::vector<double> flux(N_x, 0.0);             // cell fluxes
 
-        for (int i = 1; i <= N_x; i++) {                 // initial condition setup
+        for (int i = 1; i <= N_x; i++) {                // exact solution calculation
             double x = dx * i + (dx / 2.0) - dx * (N_x_stopped + N_x_bc);
             if (x / t[j] < -v_max) { rho[i] = rho_max; }
             else if (v_max < x / t[j]) { rho[i] = 0; }

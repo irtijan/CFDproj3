@@ -43,16 +43,16 @@ int main() {
                 double a_L = a[i];
                 double a_R = a[i + 1];
 
-                //if (a_L <= 0.0 && a_R >= 0.0) { flux[i] = rho_max * v_max / 4.0; }
-                //else if (a_L + a_R >= 0.0) { flux[i] = rho_L * v_max * (1.0 - rho_L / rho_max); }
-                //else { flux[i] = rho_R * v_max * (1.0 - rho_R / rho_max); }
+                if (a_L <= 0.0 && a_R >= 0.0) { flux[i] = rho_max * v_max / 4.0; }
+                else if (a_L + a_R >= 0.0) { flux[i] = rho_L * v_max * (1.0 - rho_L / rho_max); }
+                else { flux[i] = rho_R * v_max * (1.0 - rho_R / rho_max); }
 
-                //double rho_LW = 0.5 * (rho_L + rho_R) - 0.5 * (dt / dx) *
-                //(rho_R * v_max * (1.0 - rho_R / rho_max) - rho_L * v_max * (1.0 - rho_L / rho_max));
-                //flux[i] = rho_LW * v_max * (1.0 - rho_LW / rho_max);
+                double rho_LW = 0.5 * (rho_L + rho_R) - 0.5 * (dt / dx) *
+                (rho_R * v_max * (1.0 - rho_R / rho_max) - rho_L * v_max * (1.0 - rho_L / rho_max));
+                flux[i] = rho_LW * v_max * (1.0 - rho_LW / rho_max);
 
-                //if (a_L + a_R >= 0.0) { flux[i] = rho_L * v_max * (1.0 - rho_L / rho_max); }
-                //else { flux[i] = rho_R * v_max * (1.0 - rho_R / rho_max); }
+                if (a_L + a_R >= 0.0) { flux[i] = rho_L * v_max * (1.0 - rho_L / rho_max); }
+                else { flux[i] = rho_R * v_max * (1.0 - rho_R / rho_max); }
 
                 if (a_L <= 0.0 && a_R >= 0.0) { flux[i] = 0.5 *
                 (rho_L * v_max * (1.0 - rho_L / rho_max) + rho_R * v_max * (1.0 - rho_R / rho_max)
